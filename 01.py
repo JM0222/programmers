@@ -29,13 +29,11 @@ def cluster(str):
       "Y",
       "Z",
     ];
-    words = ''
-    for i in str:
-        if (i.upper() in alphabet):
-            words += i.upper()
-    for i in range(len(words)-1):
-        word = words[i:i+2]
-        answer.append(word)
+    
+    for i in range(len(str)-1):
+        word = str[i:i+2].upper()
+        if ((word[0] in alphabet) & (word[1] in alphabet)):
+            answer.append(word)
     return answer
 
 def solution(str1, str2):
@@ -43,13 +41,15 @@ def solution(str1, str2):
     word_a = cluster(str1)
     word_b = cluster(str2)
     newWord = word_a + word_b
-    commonWord = set(word_a) & set(word_b)
+    commonWord = []
+    for i in word_b:
+        if i in word_a:
+                word_a.remove(i)
+                commonWord.append(i)
     if (sorted(word_a) == sorted(word_b)):
         result = 1
     else:
-        print(sorted(word_a), sorted(word_b))
         result = (len(commonWord) / (len(newWord) - len(commonWord))) 
 
     result = math.trunc(result * 65536)
     return result
-print(solution('aa1+aa2','AAAA12'))
